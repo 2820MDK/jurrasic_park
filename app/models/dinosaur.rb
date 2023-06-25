@@ -19,4 +19,12 @@ class Dinosaur < ApplicationRecord
 	belongs_to :species
 
 	validates :name, presence: true
+
+	def is_carniovre?
+		species.diet == "carnivore"
+	end
+
+	def is_herbivore?
+		species.diet == "herbivore"
+	end
 end
