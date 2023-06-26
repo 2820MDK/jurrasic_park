@@ -11,6 +11,9 @@
 #
 class Cage < ApplicationRecord
 	has_many :dinosaurs
+	accepts_nested_attributes_for :dinosaurs
+
+	validates :name, presence: true
 	validate :dinosaurs_of_same_species, :max_dinosaur_count
 
 	def has_dinosaurs?
