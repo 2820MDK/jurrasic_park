@@ -19,6 +19,13 @@ class Dinosaur < ApplicationRecord
 	belongs_to :species
 
 	validates :name, presence: true
+	validate :cage_has_same_species
+
+	def cage_has_same_species
+		if cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
+			errors.add(:cage, "can't be with other species")
+		end
+	end
 
 	def is_carniovre?
 		species.diet == "carnivore"

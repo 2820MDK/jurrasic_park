@@ -11,4 +11,15 @@
 #
 class Cage < ApplicationRecord
 	has_many :dinosaurs
+	validate :dinosaurs_of_same_species
+
+	def has_dinosaurs?
+		dinosaurs.count > 0
+	end
+
+	def dinosaurs_of_same_species
+		if dinosaurs.pluck(:species_id).uniq.count > 1
+			errors.add(:dinosaurs, "can't be with other species")
+		end
+	end
 end
