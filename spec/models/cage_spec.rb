@@ -12,13 +12,28 @@
 require 'rails_helper'
 
 RSpec.describe Cage, type: :model do
+	before :all do
+		@tyran = FactoryBot.create(:species, name: "Tyrannosaurus")
+		@velo = FactoryBot.create(:species, name: "Velociraptor")
+	end
+
 	context 'validations' do
 		it 'must have dinosaurs of the same species' do
-			tyran = FactoryBot.create(:species, name: "Tyrannosaurus")
-			velo = FactoryBot.create(:species, name: "Velociraptor")
-			dino1 = FactoryBot.create(:dinosaur, species: tyran)
-			dino2 = FactoryBot.create(:dinosaur, species: velo)
+			dino1 = FactoryBot.create(:dinosaur, species: @tyran)
+			dino2 = FactoryBot.create(:dinosaur, species: @velo)
 			cage = FactoryBot.build :cage, capacity: 10
+			cage.dinosaurs << dino1
+			expect(cage).to be_valid
+			cage.save!
+
+			cage.dinosaurs << dino2
+			expect(cage).not_to be_valid
+		end
+
+		it 'must have dinosaurs at or below capacity number' do
+			dino1 = FactoryBot.create(:dinosaur, species: @velo)
+			dino2 = FactoryBot.create(:dinosaur, species: @velo)
+			cage = FactoryBot.build :cage, capacity: 1
 			cage.dinosaurs << dino1
 			expect(cage).to be_valid
 			cage.save!

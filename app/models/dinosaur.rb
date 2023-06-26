@@ -20,10 +20,17 @@ class Dinosaur < ApplicationRecord
 
 	validates :name, presence: true
 	validate :cage_has_same_species
+	before_save :cage_has_space
 
 	def cage_has_same_species
 		if cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
 			errors.add(:cage, "can't be with other species")
+		end
+	end
+
+	def cage_has_space
+		if cage.dinosaurs.count >= cage.capacity
+			errors.add(:cage, "can't have more dinosaurs")
 		end
 	end
 

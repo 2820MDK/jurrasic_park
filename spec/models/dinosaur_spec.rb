@@ -41,6 +41,18 @@ RSpec.describe Dinosaur, type: :model do
 		end
 	end
 
+	context 'before save' do
+		it 'must be in a a cage with space' do
+			cage = FactoryBot.create(:cage, capacity: 1)
+			dino1 = FactoryBot.create(:dinosaur, species: @brachiosaurus, cage: cage)
+			expect(dino1).to be_valid
+
+			dino2 = FactoryBot.build(:dinosaur, species: @brachiosaurus, cage: cage)
+			dino2.save
+			expect(dino2.errors.full_messages.first).to eq("Cage can't have more dinosaurs")
+		end
+	end
+
 	context 'diets' do
 		before :each do
 			@karl = FactoryBot.create(:dinosaur, species: @tyrannosaurus, name: 'Karl Malone', cage: FactoryBot.create(:cage, name: "Cage1"))

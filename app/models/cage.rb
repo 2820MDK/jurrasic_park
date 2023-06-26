@@ -11,7 +11,7 @@
 #
 class Cage < ApplicationRecord
 	has_many :dinosaurs
-	validate :dinosaurs_of_same_species
+	validate :dinosaurs_of_same_species, :max_dinosaur_count
 
 	def has_dinosaurs?
 		dinosaurs.count > 0
@@ -20,6 +20,12 @@ class Cage < ApplicationRecord
 	def dinosaurs_of_same_species
 		if dinosaurs.pluck(:species_id).uniq.count > 1
 			errors.add(:dinosaurs, "can't be with other species")
+		end
+	end
+
+	def max_dinosaur_count
+		if dinosaurs.count > capacity
+			errors.add(:capacity, "can't have more dinosaurs")
 		end
 	end
 end
