@@ -145,4 +145,25 @@ RSpec.describe Api::CagesController, type: :controller do
     end
 
   end
+
+  describe 'DELETE /cages/:id destroy' do
+    before :each do
+      @cage = FactoryBot.create(:cage, name: "Update Cage", capacity: 12)
+      @dino = FactoryBot.create(:dinosaur, cage: @cage)
+    end
+
+    it 'destorys the cage with the right params' do
+      delete :destroy, params: { id: @cage.id }
+
+      expect(response.status).to eq(202)
+      expect(Cage.find_by_id @cage.id).to be_nil
+    end
+
+    it 'returns an error message with a bad id' do
+      delete :destroy, params: { id: 'nope' }
+      expect(response.status).to eq(404)
+
+      expect(JSON.parse(response.body)['error']).to eq("No Cage Found")
+    end
+  end
 end

@@ -1,5 +1,5 @@
 class Api::CagesController < ApplicationController
-  before_action :find_cage, only: [:show, :update]
+  before_action :find_cage, only: [:show, :update, :destroy]
 
   def index
     @cages = Cage.all
@@ -22,13 +22,21 @@ class Api::CagesController < ApplicationController
     end
   end
 
+  def destroy
+    if @cage.destroy
+      render json: { message: 'Successful deletion' }, status: :accepted
+    else
+      render json: @cage.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def find_cage
     @cage = Cage.find_by_id params[:id]
 
     unless @cage
-        render json: { error: 'No Cage Found' }, status: :not_found
+      render json: { error: 'No Cage Found' }, status: :not_found
     end
   end
 
