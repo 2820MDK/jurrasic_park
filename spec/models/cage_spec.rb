@@ -41,5 +41,14 @@ RSpec.describe Cage, type: :model do
 			cage.dinosaurs << dino2
 			expect(cage).not_to be_valid
 		end
+
+    it 'cant turn off cage with dinos' do
+      cage = FactoryBot.build :cage, capacity: 10
+      dino2 = FactoryBot.create(:dinosaur, species: @velo, cage: cage)
+      expect(cage).to be_valid
+
+      cage.has_power = false
+      expect(cage).not_to be_valid
+    end
 	end
 end

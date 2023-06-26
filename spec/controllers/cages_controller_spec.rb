@@ -144,6 +144,19 @@ RSpec.describe Api::CagesController, type: :controller do
       expect(JSON.parse(response.body)['error']).to eq("No Cage Found")
     end
 
+    it "can't be turned off with dinosaurs" do
+      cage = FactoryBot.create(:cage)
+      FactoryBot.create(:dinosaur, cage: cage)
+
+      put :update, params: {
+        id: cage.id,
+        cage: { has_power: false}
+      }
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)['has_power']).to eq(["can't turn off with dinosaurs in cage!"])
+    end
+
   end
 
   describe 'DELETE /cages/:id destroy' do
