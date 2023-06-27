@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::CagesController, type: :controller do
   render_views
 
-  before :all do
+  before :each do
     @tyrannosaurus = FactoryBot.create(:species, name: "Tyrannosaurus", diet: :carnivore)
     @brachiosaurus = FactoryBot.create(:species, name: "Brachiosaurus", diet: :herbivore)
   end

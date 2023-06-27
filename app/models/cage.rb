@@ -21,20 +21,20 @@ class Cage < ApplicationRecord
   end
 
   def dinosaurs_of_same_species
-      if dinosaurs.pluck(:species_id).uniq.count > 1
-          errors.add(:dinosaurs, "can't be with other species")
-      end
+    if dinosaurs.pluck(:species_id).uniq.count > 1
+      errors.add(:dinosaurs, "can't be with other species")
+    end
   end
 
   def max_dinosaur_count
-      if dinosaurs.count > capacity
-          errors.add(:capacity, "can't have more dinosaurs")
-      end
+    if dinosaurs.count > capacity
+      errors.add(:capacity, "can't have more dinosaurs")
+    end
   end
 
   def can_not_turn_off_if_dinosaurs
-      if !has_power && has_power_changed? && has_dinosaurs?
-          errors.add(:has_power, "can't turn off with dinosaurs in cage!")
-      end
+    if !has_power && has_power_changed? && has_dinosaurs?
+      errors.add(:has_power, "can't turn off with dinosaurs in cage!")
+    end
   end
 end

@@ -12,7 +12,7 @@
 require 'rails_helper'
 
 RSpec.describe Cage, type: :model do
-	before :all do
+	before :each do
 		@tyran = FactoryBot.create(:species, name: "Tyrannosaurus")
 		@velo = FactoryBot.create(:species, name: "Velociraptor")
 	end

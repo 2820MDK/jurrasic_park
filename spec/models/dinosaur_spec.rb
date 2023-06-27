@@ -17,7 +17,7 @@
 require 'rails_helper'
 
 RSpec.describe Dinosaur, type: :model do
-	before :all do
+	before :each do
 		@tyrannosaurus = FactoryBot.create(:species, name: "Tyrannosaurus", diet: :carnivore)
 		@brachiosaurus = FactoryBot.create(:species, name: "Brachiosaurus", diet: :herbivore)
 	end

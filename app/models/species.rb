@@ -14,4 +14,6 @@ class Species < ApplicationRecord
 		herbivore: 0,
 		carnivore: 1,
 	}
+
+	validates :name, presence: true
 end
