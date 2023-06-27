@@ -23,7 +23,7 @@ class Dinosaur < ApplicationRecord
 	before_save :cage_has_space
 
 	def cage_has_same_species
-		if cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
+		if cage && cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
 			errors.add(:cage, "can't be with other species")
 		end
 	end

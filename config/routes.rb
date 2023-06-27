@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   namespace :api do
     resources :cages, format: :json
     resources :species, format: :json
+    resources :dinosaurs, format: :json
   end
 end
