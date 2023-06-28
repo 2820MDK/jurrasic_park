@@ -15,31 +15,31 @@
 #  index_dinosaurs_on_species_id  (species_id)
 #
 class Dinosaur < ApplicationRecord
-	belongs_to :cage
-	belongs_to :species
+  belongs_to :cage
+  belongs_to :species
 
-	validates :name, presence: true
-	validate :cage_has_same_species
+  validates :name, presence: true
+  validate :cage_has_same_species
 
-	before_save :cage_has_space
+  before_save :cage_has_space
 
-	def cage_has_same_species
-		if cage && cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
-			errors.add(:cage, "can't be with other species")
-		end
-	end
+  def cage_has_same_species
+    if cage && cage.has_dinosaurs? && !cage.dinosaurs.pluck(:species_id).include?(species_id)
+      errors.add(:cage, "can't be with other species")
+    end
+  end
 
-	def cage_has_space
-		if cage.dinosaurs.count >= cage.capacity
-			errors.add(:cage, "can't have more dinosaurs")
-		end
-	end
+  def cage_has_space
+    if cage.dinosaurs.count >= cage.capacity
+      errors.add(:cage, "can't have more dinosaurs")
+    end
+  end
 
-	def is_carniovre?
-		species.diet == "carnivore"
-	end
+  def is_carniovre?
+    species.diet == "carnivore"
+  end
 
-	def is_herbivore?
-		species.diet == "herbivore"
-	end
+  def is_herbivore?
+    species.diet == "herbivore"
+  end
 end

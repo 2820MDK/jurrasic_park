@@ -9,12 +9,12 @@
 #  updated_at :datetime         not null
 #
 class Species < ApplicationRecord
-	has_many :dinosaurs
+  has_many :dinosaurs
 
-	enum diet: {
+  enum diet: {
     herbivore: 0,
     carnivore: 1,
-	}
+  }
 
-	validates :name, presence: true
+  validates :name, presence: true
 end
