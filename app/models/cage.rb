@@ -17,7 +17,7 @@ class Cage < ApplicationRecord
   validate :dinosaurs_of_same_species, :max_dinosaur_count, :can_not_turn_off_if_dinosaurs
 
   def has_dinosaurs?
-      dinosaurs.count > 0
+    dinosaurs.count > 0
   end
 
   def dinosaurs_of_same_species
