@@ -1,14 +1,16 @@
 # Basics
-- Rails 7 Jurrasic Park Restful API Application (Postgres DB)
+- Rails 7 Jurrasic Park Restful API Application (Postgres DB) with an Rspec Testing Suite
 
 # Set Up Instructions
-Run `bundle install` to install all the dependencies
+Run `bundle install` to install all the dependencies.
 
-Then run `bundle exec rake db:create && bundle exec rake db:migrate` to run the migrations
+Then run `bundle exec rake db:create && bundle exec rake db:migrate` to run the migrations.
 
-Then run `bundle exec rake db:seed` to give yourself a good amount of example data
+Then run `bundle exec rake db:seed` to give yourself a good amount of example data.
 
-Finally run `bundle exec rails s` to start the server
+Finally run `bundle exec rails s` to start the server.
+
+You may also run the test suite via `bundle exec rspec`.
 
 # API
 For each of Cages, Species, and Dinosaurs -> there are index, create, show, update, destroy action. 
