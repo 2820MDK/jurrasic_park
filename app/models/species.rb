@@ -10,9 +10,10 @@
 #
 class Species < ApplicationRecord
 	has_many :dinosaurs
+
 	enum diet: {
-		herbivore: 0,
-		carnivore: 1,
+    herbivore: 0,
+    carnivore: 1,
 	}
 
 	validates :name, presence: true

@@ -20,6 +20,7 @@ class Dinosaur < ApplicationRecord
 
 	validates :name, presence: true
 	validate :cage_has_same_species
+
 	before_save :cage_has_space
 
 	def cage_has_same_species
