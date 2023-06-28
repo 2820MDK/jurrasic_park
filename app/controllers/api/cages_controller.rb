@@ -3,6 +3,9 @@ class Api::CagesController < ApplicationController
 
   def index
     @cages = Cage.all
+    if params[:has_power]
+      @cages = @cages.where(has_power: params[:has_power])
+    end
   end
 
   def show

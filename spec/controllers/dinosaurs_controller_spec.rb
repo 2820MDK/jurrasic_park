@@ -9,6 +9,10 @@ RSpec.describe Api::DinosaursController, type: :controller do
   end
 
   describe "GET /index" do
+    before :each do
+      FactoryBot.create_list(:dinosaur, 8, species: @tyrannosaurus, cage: @cage)
+    end
+
     it 'returns a successful response' do
       get :index
 
@@ -17,11 +21,18 @@ RSpec.describe Api::DinosaursController, type: :controller do
     end
 
     it 'returns data about the dinosaurs' do
-      FactoryBot.create_list(:dinosaur, 8, species: @tyrannosaurus, cage: @cage)
-
       get :index
       data = JSON.parse(response.body)
       expect(data.count).to eq(8)
+    end
+
+    it 'can filter by species' do
+      spinosaurus = FactoryBot.create(:species, name: "Spinosaurus", diet: :carnivore)
+      Dinosaur.last.update(species: spinosaurus, cage: FactoryBot.create(:cage))
+
+      get :index, params: { species: "Spinosaurus"}
+      data = JSON.parse(response.body)
+      expect(data.count).to eq(1)
     end
   end
 

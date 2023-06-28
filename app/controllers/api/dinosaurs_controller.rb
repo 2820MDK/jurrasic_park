@@ -2,7 +2,10 @@ class Api::DinosaursController < ApplicationController
   before_action :find_dinosaur, only: [:show, :update, :destroy]
 
   def index
-      @dinosaurs = Dinosaur.all
+    @dinosaurs = Dinosaur.all
+    if params[:species]
+      @dinosaurs = @dinosaurs.where(species: Species.where('lower(name) = ?', (params[:species].downcase)))
+    end
   end
 
   def show

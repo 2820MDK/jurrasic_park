@@ -9,6 +9,11 @@ RSpec.describe Api::CagesController, type: :controller do
   end
 
   describe "GET /index" do
+    before :each do
+      @cage1 = FactoryBot.create(:cage)
+      @cage2 = FactoryBot.create(:cage)
+    end
+
     it 'returns a successful response' do
       get :index
 
@@ -17,14 +22,20 @@ RSpec.describe Api::CagesController, type: :controller do
     end
 
     it 'returns data about the cages and dinosaurs' do
-      cage1 = FactoryBot.create(:cage)
-      cage2 = FactoryBot.create(:cage)
-      FactoryBot.create_list(:dinosaur, 8, species: @tyrannosaurus, cage: cage1)
-      FactoryBot.create_list(:dinosaur, 8, species: @brachiosaurus, cage: cage2)
+      FactoryBot.create_list(:dinosaur, 8, species: @tyrannosaurus, cage: @cage1)
+      FactoryBot.create_list(:dinosaur, 8, species: @brachiosaurus, cage: @cage2)
 
       get :index
       data = JSON.parse(response.body)
       expect(data.count).to eq(2)
+    end
+
+    it 'can filter by has_power' do
+      @cage1.update(has_power: false)
+
+      get :index, params: {has_power: "false"}
+      data = JSON.parse(response.body)
+      expect(data.count).to eq(1)
     end
   end
 
